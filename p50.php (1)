@@ -1,0 +1,59 @@
+<?php
+// Cookie ka naam
+$cookie_name = "theme";
+
+// Agar user button click kare to preference save karein
+if (isset($_POST['theme'])) {
+    $selected_theme = $_POST['theme'];
+    // Cookie set karo 30 din ke liye
+    setcookie($cookie_name, $selected_theme, time() + (30 * 24 * 60 * 60));
+    // Refresh page taaki nayi theme immediately apply ho
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
+}
+
+// Default theme agar cookie set nahi hai
+$theme = isset($_COOKIE[$cookie_name]) ? $_COOKIE[$cookie_name] : "light";
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Theme Preference</title>
+    <style>
+        body.light {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        body.dark {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .btn {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .light-btn {
+            background-color: #f0f0f0;
+            color: #000;
+        }
+        .dark-btn {
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+<body class="<?php echo $theme; ?>">
+
+    <h1>Welcome! Your theme preference is "<?php echo ucfirst($theme); ?> Mode"</h1>
+
+    <form method="post">
+        <button class="btn light-btn" type="submit" name="theme" value="light">Light Mode</button>
+        <button class="btn dark-btn" type="submit" name="theme" value="dark">Dark Mode</button>
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<?php
+// Cookie ka naam
+$cookie_name = "discount_offer";
+
+// Check karo cookie set hai ya nahi
+if (!isset($_COOKIE[$cookie_name])) {
+    // Agar cookie set nahi hai to discount message show karo
+    $message = "🎉 Welcome! You get 10% off (valid for 10 minutes).";
+
+    // Cookie set karo 10 minutes ke liye
+    setcookie($cookie_name, "active", time() + (10 * 60)); 
+} else {
+    // Agar cookie already set hai (10 min ke andar ya baad), discount mat dikhana
+    $message = "";
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Limited Time Offer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+        }
+        .offer {
+            background-color: #ffeb3b;
+            color: #000;
+            padding: 20px;
+            border: 2px dashed #ff9800;
+            font-size: 18px;
+            width: fit-content;
+        }
+    </style>
+</head>
+<body>
+
+<?php if (!empty($message)) { ?>
+    <div class="offer"><?php echo $message; ?></div>
+<?php } else { ?>
+    <p>No discount available now. ⏳</p>
+<?php } ?>
+
+</body>
+</html>
